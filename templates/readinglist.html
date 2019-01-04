@@ -1,4 +1,7 @@
 <!-- Page for seeing all books from user's list -->
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
 Will display list of all books from the user's list in database with links to add/edit/delete:
 
 Add Book
@@ -6,3 +9,4 @@ Add Book
 Book name (genre) edit/delete
 Book name (genre) edit/delete
 etc.
+{% endblock %}
