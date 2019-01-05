@@ -9,7 +9,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 # Add Example User
-sampleUser = User(name='SampleUser')
+sampleUser = User(name='SampleUser', email='no-email')
 session.add(sampleUser)
 session.commit()
 
