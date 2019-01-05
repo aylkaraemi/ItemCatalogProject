@@ -19,7 +19,7 @@ userID = sampleUser.id
 sampleBook1 = Book(
     title='La Belle Sauvage',
     author='Philip Pullman',
-    genre='Children/Young Adult',
+    genre='Children-Young Adult',
     description="""
         Continuation of Pullman's 'His Dark Materials' trilogy.
         Tells the story of how the infant Lyra gained sanctuary at Oxford.
@@ -228,7 +228,7 @@ session.commit()
 sampleBook19 = Book(
     title='Cover Her Face',
     author='P.D. James',
-    genre='Mystery/Crime',
+    genre='Mystery-Crime',
     description="""
         DCI Adam Dalgliesh investigates the murder of a maid at a manor house.
         """,
@@ -239,7 +239,7 @@ session.commit()
 sampleBook20 = Book(
     title='Gaudy Night',
     author='Dorothy L. Sayers',
-    genre='Mystery/Crime',
+    genre='Mystery-Crime',
     description="""
         The 10th Lord Peter Wimsey mystery.
         Vandalism and poison pen letters threaten scandal at Oxford.
@@ -252,7 +252,7 @@ session.commit()
 sampleBook21 = Book(
     title='And Then There Were None',
     author='Agatha Christie',
-    genre='Mystery/Crime',
+    genre='Mystery-Crime',
     description="""
         Most popular Agatha Christie novel and the author's favorite.
         Eight people are invited to an isolated island off the Devon coast.
