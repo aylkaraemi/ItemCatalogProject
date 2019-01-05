@@ -4,7 +4,7 @@ A Project for the Udacity Full Stack Nanodegree
 This web app runs a reading list app running off of the localhost domain. It allows logged in users to create and maintain a list of books to read. When not logged in the app displays a sample list of books. The user can view their full reading list, a list of books of a selected genre, or detail on a single book.
 
 **Dependencies: (install details in the dependencies section)**
-- Python 2 or 3
+- Python 2.7 or 3
 - Unix shell program
 - VirtualBox & Vagrant
 - web browser
@@ -15,7 +15,7 @@ This web app runs a reading list app running off of the localhost domain. It all
 This app requires python (2 or 3), VirtualBox, Vagrant, a Unix-style terminal to run the files. Instructions for downloading and installing each of these are below.
 
 ### Python
-To download python click [here](https://www.python.org/downloads/) and select the version to install. This tool works on both python 2 and 3 so the most recent version is fine to use.
+To download python click [here](https://www.python.org/downloads/) and select the version to install. This tool works on python version 2.7 and later so if you are using a version earlier than 2.7 you will need to upgrade.
 
 _Note_: The site should detect the OS, but if not there are links to the installers for each OS directly below the button for the latest version.
 
