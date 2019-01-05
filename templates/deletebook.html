@@ -2,5 +2,14 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-delete book
+<div class="banner">
+    <h3>Book Title</h3>
+    Are you sure you want to delete this book from your list?
+</div>
+<div>
+    <form class="delete" action="#" method="POST">
+        <input type="submit" value="Confirm Delete">
+    </form>
+    <h4><a href="#">Cancel</a></h4>
+</div>
 {% endblock %}

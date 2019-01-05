@@ -2,5 +2,87 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-Add a new book here
+<div class="banner">
+    <h3>What else would you like to read?</h3>
+    Add a book to your list here:
+</div>
+<div class="forms">
+    <form action="#" method="POST">
+        <label for="title">Title:</label>
+        <input type="text" name="title"><br><br>
+
+        <label for="author">Author:</label>
+        <input type="text" name="author"><br><br>
+
+        <label for="description">Description:</label><br>
+        <textarea maxlength="350" rows="5" name="description" placeholder="Optional - enter a brief description of plot">
+        </textarea><br>
+
+        <label for="genre">Genre:</label>
+        <div class="radio">
+            <input type="radio" name="genre" value="Children/Young Adult">
+            Children/Young Adult
+            </input><br>
+
+            <input type="radio" name="genre" value="Graphic Novel">
+            Graphic Novel
+            </input><br>
+
+            <input type="radio" name="genre" value="Classic">
+            Classic
+            </input><br>
+
+            <input type="radio" name="genre" value="Fantasy">
+            Fantasy
+            </input><br>
+
+            <input type="radio" name="genre" value="Horror">
+            Horror
+            </input><br>
+
+            <input type="radio" name="genre" value="SciFi">
+            SciFi
+            </input><br>
+
+            <input type="radio" name="genre" value="Suspense/Thriller">
+            Suspense/Thriller
+            </input><br>
+
+            <input type="radio" name="genre" value="Western">
+            Western
+            </input><br>
+
+            <input type="radio" name="genre" value="Romance">
+            Romance
+            </input><br>
+
+            <input type="radio" name="genre" value="Mystery/Crime">
+            Mystery/Crime
+            </input><br>
+
+            <input type="radio" name="genre" value="Poetry">
+            Poetry
+            </input><br>
+
+            <input type="radio" name="genre" value="Anthology">
+            Anthology
+            </input><br>
+
+            <input type="radio" name="genre" value="General Fiction">
+            General Fiction
+            </input><br>
+
+            <input type="radio" name="genre" value="Non-Fiction">
+            Non-Fiction
+            </input><br>
+
+            <input type="radio" name="genre" value="Other">
+            Other
+            </input><br>
+        </div>
+        <br><br>
+        <button type="submit" id="submit">Add</button>
+    </form>
+    <h4><a href="#">Cancel</a></h4>
+</div>
 {% endblock %}
