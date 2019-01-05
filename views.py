@@ -43,7 +43,7 @@ def viewReadingList():
 
 @app.route('/readinglist/<string:genre>')
 def viewGenre(genre):
-    return render_template('publicgenrelist.html')
+    return render_template('publicgenrelist.html', genre=genre)
 
 
 @app.route('/readinglist/<int:id>')
@@ -51,17 +51,17 @@ def viewBook(id):
     return render_template('publicbook.html')
 
 
-@app.route('/readinglist/add')
+@app.route('/readinglist/add', methods=['GET', 'POST'])
 def addBook():
     return render_template('addbook.html')
 
 
-@app.route('/readinglist/<int:id>/edit')
+@app.route('/readinglist/<int:id>/edit', methods=['GET', 'POST'])
 def editBook(id):
     return render_template('editbook.html')
 
 
-@app.route('/readinglist/<int:id>/delete')
+@app.route('/readinglist/<int:id>/delete', methods=['GET', 'POST'])
 def deleteBook(id):
     return render_template('deletebook.html')
 

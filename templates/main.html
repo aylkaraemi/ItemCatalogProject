@@ -5,22 +5,23 @@
 	</head>
 	<body>
         <div id="sidebar">
-            <a href="#">Home</a>
-            <a href="#">Children/Young Adult</a>
-            <a href="#">Graphic Novel</a>
-            <a href="#">Classic</a>
-            <a href="#">Fantasy</a>
-            <a href="#">Horror</a>
-            <a href="#">SciFi</a>
-            <a href="#">Suspense/Thriller</a>
-            <a href="#">Western</a>
-            <a href="#">Romance</a>
-            <a href="#">Mystery/Crime</a>
-            <a href="#">Poetry</a>
-            <a href="#">Anthology</a>
-            <a href="#">General Fiction</a>
-            <a href="#">Non-Fiction</a>
-            <a href="#">Other</a>
+            <a href="{{url_for('showLogin')}}">Login</a><br>
+            <a href="{{url_for('viewReadingList')}}">Home</a><br>
+            <a href="{{url_for('viewGenre', genre='Children-Young Adult')}}">Children/Young Adult</a>
+            <a href="{{url_for('viewGenre', genre='Graphic Novel')}}">Graphic Novel</a>
+            <a href="{{url_for('viewGenre', genre='Classic')}}">Classic</a>
+            <a href="{{url_for('viewGenre', genre='Fantasy')}}">Fantasy</a>
+            <a href="{{url_for('viewGenre', genre='Horror')}}">Horror</a>
+            <a href="{{url_for('viewGenre', genre='SciFi')}}">SciFi</a>
+            <a href="{{url_for('viewGenre', genre='Suspense-Thriller')}}">Suspense/Thriller</a>
+            <a href="{{url_for('viewGenre', genre='Western')}}">Western</a>
+            <a href="{{url_for('viewGenre', genre='Romance')}}">Romance</a>
+            <a href="{{url_for('viewGenre', genre='Mystery-Crime')}}">Mystery/Crime</a>
+            <a href="{{url_for('viewGenre', genre='Poetry')}}">Poetry</a>
+            <a href="{{url_for('viewGenre', genre='Anthology')}}">Anthology</a>
+            <a href="{{url_for('viewGenre', genre='General Fiction')}}">General Fiction</a>
+            <a href="{{url_for('viewGenre', genre='Non-Fiction')}}">Non-Fiction</a>
+            <a href="{{url_for('viewGenre', genre='Other')}}">Other</a>
         </div>
 		<div class="main">
 			{% block content %}

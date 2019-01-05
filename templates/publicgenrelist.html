@@ -2,9 +2,14 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
+<div class="banner">
+    <h3>Here are all your {{genre}} books:</h3>
+</div>
+<div class="contents">
 Will display for sample books:
-Genre Name
+{{genre}}
 - book 1
 - book 2
 - etc
+</div>
 {% endblock %}
