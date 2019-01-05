@@ -6,10 +6,10 @@
     <h3>Here's some books you might like to read:</h3>
 </div>
 <div class="contents">
-Will display list of all books from sample list in database:
-
-Book name (genre)
-Book name (genre)
-etc.
+    <ul>
+        {% for book in books %}
+        <li><a class="title" href="{{url_for('viewBook', id=book.id)}}">{{book.title}}</a> by {{book.author}} (<a class="genre" href="{{url_for('viewGenre', genre=book.genre)}}">{{book.genre}}</a>)
+        {% endfor %}
+    </ul>
 </div>
 {% endblock %}

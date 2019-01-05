@@ -38,17 +38,23 @@ def readingListJSON():
 @app.route('/')
 @app.route('/readinglist')
 def viewReadingList():
-    return render_template('publiclist.html')
+    sampleuser = session.query(User).filter_by(name="SampleUser").first()
+    books = session.query(Book).filter_by(user_id=sampleuser.id).all()
+    return render_template('publiclist.html', books=books)
 
 
 @app.route('/readinglist/<string:genre>')
 def viewGenre(genre):
-    return render_template('publicgenrelist.html', genre=genre)
+    sampleuser = session.query(User).filter_by(name="SampleUser").first()
+    books = session.query(Book).filter_by(
+        user_id=sampleuser.id, genre=genre).all()
+    return render_template('publicgenrelist.html', genre=genre, books=books)
 
 
 @app.route('/readinglist/<int:id>')
 def viewBook(id):
-    return render_template('publicbook.html')
+    book = session.query(Book).filter_by(id=id).first()
+    return render_template('publicbook.html', book=book)
 
 
 @app.route('/readinglist/add', methods=['GET', 'POST'])

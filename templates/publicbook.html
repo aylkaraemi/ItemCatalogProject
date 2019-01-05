@@ -3,13 +3,13 @@
 {% block content %}
 {% include "header.html" %}
 <div class="banner">
-    <h3>Detail for Book:</h3>
+    <h3>{{book.title}}:</h3>
 </div>
 <div class="contents">
-This will show the following for a sample book:
-title
-author
-genre
-description
+    <ul style="list-style: none;">
+        <li><a href="{{url_for('viewGenre', genre=book.genre)}}">{{book.genre}}</a>
+        <li>by {{book.author}}
+        <li>{{book.description}}
+    </ul>
 </div>
 {% endblock %}
