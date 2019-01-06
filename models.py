@@ -24,6 +24,16 @@ class Book(Base):
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
+    @property
+    def serialize(self):
+        return {
+            'book_id': self.id,
+            'title': self.title,
+            'author': self.author,
+            'genre': self.genre,
+            'description': self.description
+        }
+
 
 engine = create_engine('sqlite:///readinglist.db')
 

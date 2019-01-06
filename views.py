@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 from flask import (
     Flask, render_template, request, redirect,
-    jsonify, url_for, flash, make_response, g)
+    jsonify, url_for, flash, make_response)
 from flask import session as login_session
 from oauth2client.client import flow_from_clientsecrets, FlowExchangeError
 import httplib2
 import json
 import requests
-from sqlalchemy import create_engine, asc
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Base, User, Book
 import random
@@ -135,11 +135,12 @@ def disconnect():
 
 @app.route('/readinglist/JSON')
 def readingListJSON():
-    return "This will be a JSON endpoint"
+    books = session.query(Book).all()
+    return jsonify(books=[book.serialize for book in books])
 
 
 @app.route('/')
-@app.route('/readinglist')
+@app.route('/readinglist/')
 def viewReadingList():
     if 'username' not in login_session:
         sampleuser = session.query(User).filter_by(name="SampleUser").first()
