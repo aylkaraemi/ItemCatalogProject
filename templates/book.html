@@ -2,12 +2,16 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-For logged in users<br>
-This will show:
-title
-author
-genre
-description
-
-edit/delete
+    <div class="banner">
+        <h3>{{book.title}}:</h3>
+    </div>
+    <div class="contents">
+        <ul style="list-style: none;">
+            <li><a href="{{url_for('viewGenre', genre=book.genre)}}">{{book.genre}}</a>
+            <li>by {{book.author}}
+            <li>{{book.description}}
+            <li><span class='ed-del'><a href="{{url_for('editBook', id=book.id)}}">Edit Book Detail</a></span>
+            <li><span class='ed-del'><a href="{{url_for('deleteBook', id=book.id)}}">Delete Book</a></span>
+        </ul>
+    </div>
 {% endblock %}

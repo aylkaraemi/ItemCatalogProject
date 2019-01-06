@@ -2,6 +2,9 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
+<div class="banner">
+    <h3>Click the button below to login:</h3>
+</div>
 <div id="signinButton">
     <span class="g-signin"
         data-scope="openid email"
@@ -29,7 +32,7 @@
                             $('#result').html('<h1>Welcome!</h1>')
                             setTimeout(function() {
                                 window.location.href = "/readinglist";
-                            }, 4000);
+                            }, 50);
                         } else if (authResult['error']) {
                             console.log('Oops, there was a problem logging you in: ' + authResult['error']);
                         } else {

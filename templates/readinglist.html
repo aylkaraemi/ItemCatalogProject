@@ -2,11 +2,17 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-Will display list of all books from the user's list in database with links to add/edit/delete:
-
-Add Book
-
-Book name (genre) edit/delete
-Book name (genre) edit/delete
-etc.
+<div class="banner">
+    <h3>Here's the books you want to read:</h3>
+</div>
+<div class="contents">
+    <ul>
+    {% if books %}
+        {% for book in books %}
+        <li><a class="title" href="{{url_for('viewBook', id=book.id)}}">{{book.title}}</a> by {{book.author}} (<a class="genre" href="{{url_for('viewGenre', genre=book.genre)}}">{{book.genre}}</a>) <span class='ed-del'><a href="{{url_for('editBook', id=book.id)}}">Edit</a> or <a href="{{url_for('deleteBook', id=book.id)}}">Delete</a> book</span>
+        {% endfor %}
+    {% endif %}
+        <li><a href="{{url_for('addBook')}}">Add a new book to read</a>
+    </ul>
+</div>
 {% endblock %}

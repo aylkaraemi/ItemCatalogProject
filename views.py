@@ -125,9 +125,8 @@ def disconnect():
         del login_session['googleID']
         del login_session['username']
         del login_session['email']
-        response = make_response(json.dumps('You are now logged off'), 200)
-        response.headers['Content-Type'] = 'application/json'
-        return response
+        # add flash message about logoff
+        return redirect(url_for('viewReadingList'))
     else:
         response = make_response(json.dumps('Disconnect failed.'), 400)
         response.headers['Content-Type'] = 'application/json'
@@ -142,38 +141,129 @@ def readingListJSON():
 @app.route('/')
 @app.route('/readinglist')
 def viewReadingList():
-    sampleuser = session.query(User).filter_by(name="SampleUser").first()
-    books = session.query(Book).filter_by(user_id=sampleuser.id).all()
-    return render_template('publiclist.html', books=books)
+    if 'username' not in login_session:
+        sampleuser = session.query(User).filter_by(name="SampleUser").first()
+        books = session.query(Book).filter_by(user_id=sampleuser.id).all()
+        return render_template('publiclist.html', books=books)
+    else:
+        user = session.query(User).filter_by(
+            name=login_session['username']).first()
+        books = session.query(Book).filter_by(user_id=user.id).all()
+        return render_template('readinglist.html', books=books, name=user.name)
 
 
 @app.route('/readinglist/<string:genre>')
 def viewGenre(genre):
-    sampleuser = session.query(User).filter_by(name="SampleUser").first()
-    books = session.query(Book).filter_by(
-        user_id=sampleuser.id, genre=genre).all()
-    return render_template('publicgenrelist.html', genre=genre, books=books)
+    if 'username' not in login_session:
+        sampleuser = session.query(User).filter_by(name="SampleUser").first()
+        books = session.query(Book).filter_by(
+            user_id=sampleuser.id, genre=genre).all()
+        return render_template(
+            'publicgenrelist.html', genre=genre, books=books)
+    else:
+        user = session.query(User).filter_by(
+            name=login_session['username']).first()
+        books = session.query(Book).filter_by(
+            user_id=user.id, genre=genre).all()
+        return render_template('genrelist.html', books=books, name=user.name)
 
 
 @app.route('/readinglist/<int:id>')
 def viewBook(id):
+    sampleuser = session.query(User).filter_by(name="SampleUser").first()
     book = session.query(Book).filter_by(id=id).first()
-    return render_template('publicbook.html', book=book)
+    if not book:
+        # add flash message
+        return redirect(url_for('viewReadingList'))
+    if book.user_id == sampleuser.id:
+        return render_template('publicbook.html', book=book)
+    elif 'username' not in login_session:
+        return redirect(url_for('showLogin'))
+    else:
+        user = session.query(User).filter_by(
+            name=login_session['username']).first()
+        if book.user_id == user.id:
+            return render_template('book.html', book=book, name=user.name)
+        else:
+            # add flash message
+            return """
+                The book you are trying to access belongs to another user.
+                Users only have access to the books on their own list and
+                 the sample books.
+                """
 
 
 @app.route('/readinglist/add', methods=['GET', 'POST'])
 def addBook():
-    return render_template('addbook.html')
+    if 'username' not in login_session:
+        return redirect(url_for('showLogin'))
+    user = session.query(User).filter_by(
+        name=login_session['username']).first()
+    if request.method == 'POST':
+        newBook = Book(
+            title=request.form['title'],
+            author=request.form['author'],
+            genre=request.form['genre'],
+            description=request.form['description'],
+            user_id=user.id)
+        session.add(newBook)
+        session.commit()
+        # add flash message about adding book
+        return redirect(url_for('viewReadingList'))
+    else:
+        return render_template('addbook.html', name=user.name)
 
 
 @app.route('/readinglist/<int:id>/edit', methods=['GET', 'POST'])
 def editBook(id):
-    return render_template('editbook.html')
+    if 'username' not in login_session:
+        return redirect(url_for('showLogin'))
+    user = session.query(User).filter_by(
+        name=login_session['username']).first()
+    book = session.query(Book).filter_by(id=id).first()
+    if not book:
+        # add flash message about no book existing
+        return redirect(url_for('viewReadingList'))
+    if book.user_id != user.id:
+        # add flash message about no access
+        return redirect(url_for('viewReadingList'))
+    if request.method == 'POST':
+        if request.form['title']:
+            book.title = request.form['title']
+        if request.form['author']:
+            book.author = request.form['author']
+        if request.form.get('genre'):
+            book.genre = request.form.get('genre')
+        if request.form['description']:
+            book.description = request.form['description']
+        session.add(book)
+        session.commit()
+        # add flash message about book edited
+        return redirect(url_for('viewReadingList'))
+    else:
+        return render_template('editbook.html', book=book, name=user.name)
 
 
 @app.route('/readinglist/<int:id>/delete', methods=['GET', 'POST'])
 def deleteBook(id):
-    return render_template('deletebook.html')
+    if 'username' not in login_session:
+        return redirect(url_for('showLogin'))
+    user = session.query(User).filter_by(
+        name=login_session['username']).first()
+    book = session.query(Book).filter_by(id=id).first()
+    if not book:
+        # add flash message about book does not exist
+        return redirect(url_for('viewReadingList'))
+    if book.user_id != user.id:
+        # add flash message about no access
+        return redirect(url_for('viewReadingList'))
+    if request.method == 'POST':
+        session.delete(book)
+        session.commit()
+        # add flash message about book deleted
+        return redirect(url_for('viewReadingList'))
+    else:
+        return render_template('deletebook.html', book=book, name=user.name)
 
 
 if __name__ == '__main__':
