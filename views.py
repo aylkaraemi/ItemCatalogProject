@@ -139,6 +139,22 @@ def readingListJSON():
     return jsonify(books=[book.serialize for book in books])
 
 
+@app.route('/readinglist/<string:genre>/JSON')
+def genreListJSON(genre):
+    books = session.query(Book).filter_by(genre=genre).all()
+    if books:
+        return jsonify(books=[book.serialize for book in books])
+    else:
+        return jsonify({'error': 'No books found for {}'.format(genre)})
+
+
+@app.route('/readinglist/<int:id>/JSON')
+def bookJSON(id):
+    book = session.query(Book).first()
+    if book:
+        return jsonify(book=book.serialize)
+
+
 @app.route('/')
 @app.route('/readinglist/')
 def viewReadingList():
