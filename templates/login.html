@@ -2,8 +2,43 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
-<html>
-    <!-- Code for Google Sign in to go here -->
-    This will have the Google Login button
-</html>
+<div id="signinButton">
+    <span class="g-signin"
+        data-scope="openid email"
+        data-clientid="{{clientID}}"
+        data-redirecturi="postmessage"
+        data-accesstype="offline"
+        data-cookiepolicy="single_host_origin"
+        data-callback="signInCallback"
+        data-approvalprompt="force">
+    </span>
+</div>
+<div>
+    <script>
+        function signInCallback(authResult) {
+            if (authResult['code']){
+                $('#signinButton').attr('style', 'display: none');
+                $.ajax({
+                    type: 'POST',
+                    url: '/gconnect?state={{state}}',
+                    processData: false,
+                    data: authResult['code'],
+                    contentType: 'application/octet-stream; charset=utf-8',
+                    success: function(result) {
+                        if (result) {
+                            $('#result').html('<h1>Welcome!</h1>')
+                            setTimeout(function() {
+                                window.location.href = "/readinglist";
+                            }, 4000);
+                        } else if (authResult['error']) {
+                            console.log('Oops, there was a problem logging you in: ' + authResult['error']);
+                        } else {
+                            $('#result').html('Problem making a server-side call. Check your config and console for error messages.');
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</div>
 {% endblock %}
