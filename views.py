@@ -19,7 +19,6 @@ baseURL = 'https://www.googleapis.com/oauth2/v1/'
 
 app = Flask(__name__)
 
-# Connect to Database and create database session
 engine = create_engine('sqlite:///readinglist.db')
 Base.metadata.bind = engine
 
@@ -106,6 +105,7 @@ def googleConnect():
             email=login_session['email']).first()
     login_session['userID'] = user.id
     output = '<h1>Welcome {}!</h1>'.format(login_session['username'])
+    flash('Welcome {}!'.format(login_session['username']))
     return output
 
 
@@ -125,7 +125,7 @@ def disconnect():
         del login_session['googleID']
         del login_session['username']
         del login_session['email']
-        # add flash message about logoff
+        flash('You have successfully logged off.')
         return redirect(url_for('viewReadingList'))
     else:
         response = make_response(json.dumps('Disconnect failed.'), 400)
@@ -190,7 +190,7 @@ def viewBook(id):
     sampleuser = session.query(User).filter_by(name="SampleUser").first()
     book = session.query(Book).filter_by(id=id).first()
     if not book:
-        # add flash message
+        flash('Requested book was not found.')
         return redirect(url_for('viewReadingList'))
     if book.user_id == sampleuser.id:
         return render_template('publicbook.html', book=book)
@@ -202,12 +202,12 @@ def viewBook(id):
         if book.user_id == user.id:
             return render_template('book.html', book=book, name=user.name)
         else:
-            # add flash message
-            return """
+            flash("""
                 The book you are trying to access belongs to another user.
                 Users only have access to the books on their own list and
                  the sample books.
-                """
+                """)
+            return redirect(url_for('viewReadingList'))
 
 
 @app.route('/readinglist/add', methods=['GET', 'POST'])
@@ -225,7 +225,7 @@ def addBook():
             user_id=user.id)
         session.add(newBook)
         session.commit()
-        # add flash message about adding book
+        flash('{} successfully added!'.format(newBook.title))
         return redirect(url_for('viewReadingList'))
     else:
         return render_template('addbook.html', name=user.name)
@@ -239,10 +239,13 @@ def editBook(id):
         name=login_session['username']).first()
     book = session.query(Book).filter_by(id=id).first()
     if not book:
-        # add flash message about no book existing
+        flash('Requested book was not found.')
         return redirect(url_for('viewReadingList'))
     if book.user_id != user.id:
-        # add flash message about no access
+        flash("""
+            {} (id: {}) belongs to another user.
+            Users can only edit the books on their own list.
+            """.format(book.title, book.id))
         return redirect(url_for('viewReadingList'))
     if request.method == 'POST':
         if request.form['title']:
@@ -255,7 +258,7 @@ def editBook(id):
             book.description = request.form['description']
         session.add(book)
         session.commit()
-        # add flash message about book edited
+        flash('{} succesfully updated.'.format(book.title))
         return redirect(url_for('viewReadingList'))
     else:
         return render_template('editbook.html', book=book, name=user.name)
@@ -269,15 +272,18 @@ def deleteBook(id):
         name=login_session['username']).first()
     book = session.query(Book).filter_by(id=id).first()
     if not book:
-        # add flash message about book does not exist
+        flash('Requested book was not found.')
         return redirect(url_for('viewReadingList'))
     if book.user_id != user.id:
-        # add flash message about no access
+        flash("""
+            {} (id: {}) belongs to another user.
+            Users can only delete the books on their own list.
+            """.format(book.title, book.id))
         return redirect(url_for('viewReadingList'))
     if request.method == 'POST':
         session.delete(book)
         session.commit()
-        # add flash message about book deleted
+        flash("Book successfully deleted.")
         return redirect(url_for('viewReadingList'))
     else:
         return render_template('deletebook.html', book=book, name=user.name)

@@ -2,6 +2,17 @@
 {% extends "main.html" %}
 {% block content %}
 {% include "header.html" %}
+<div class = 'flash'>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul style="list-style: none;">
+    {% for message in messages %}
+        <li> <strong> {{ message }} </strong>
+    {% endfor %}
+    </ul>
+    {% endif %}
+{% endwith %}
+</div>
 <div class="banner">
     <h3>Here's some books you might like to read:</h3>
 </div>
