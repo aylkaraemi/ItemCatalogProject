@@ -36,12 +36,13 @@ def showLogin():
 
 @app.route('/gconnect', methods=['POST'])
 def googleConnect():
+    # match state tokens to confirm request is valid
     if request.args.get('state') != login_session['state']:
         response = make_response(
             json.dumps('State parameter is invalid.'), 401)
         response.headers['content-type'] = 'application/json'
         return response
-
+    # attempt to exchange auth code for token
     auth_code = request.data
     try:
         oauthFlow = flow_from_clientsecrets('client_secrets.json', scope='')
@@ -52,7 +53,7 @@ def googleConnect():
             "There was a problem exchanging credentials."), 401)
         response.headers['content-type'] = 'application/json'
         return response
-
+    # check if token is valid with google API server
     accessToken = credentials.access_token
     validationURL = baseURL + 'tokeninfo?access_token={}'.format(
         accessToken)
@@ -62,38 +63,38 @@ def googleConnect():
         response = make_response(json.dumps(result.get('error')), 500)
         response.headers['Content-Type'] = 'application/json'
         return response
-
+    # if token is valid, confirm token is valid for user
     googleID = credentials.id_token['sub']
     if result['user_id'] != googleID:
         response = make_response(
             json.dumps("Token is not valid for user."), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-
+    # if token is valid and valid for user, confirm is valid for app
     if result['issued_to'] != CLIENT_ID:
         response = make_response(
             json.dumps("Token is not valid for this app."), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-
+    # if token is valid in every way, confirm if user is already logged in
     storedToken = login_session.get('accessToken')
     storedGoogleID = login_session.get('googleID')
     if storedToken is not None and googleID == storedGoogleID:
         response = make_response(json.dumps("You are already logged in."), 200)
         response.headers['Content-Type'] = 'application/json'
         return response
-
+    # if user is not already logged in store token & googleID
     login_session['accessToken'] = accessToken
     login_session['googleID'] = googleID
-
+    # get user info from google API server
     userinfoURL = baseURL + 'userinfo'
     params = {'access_token': accessToken, 'alt': 'json'}
     answer = requests.get(userinfoURL, params=params)
     userInfo = answer.json()
-
+    # save username and email of user in login_session
     login_session['username'] = userInfo['name']
     login_session['email'] = userInfo['email']
-
+    # check if there is record for user in database, if not add user
     user = session.query(User).filter_by(
         email=login_session['email']).first()
     if not user:
