@@ -1,0 +1,112 @@
+body {
+    background-image: url("books-1655783_1920.jpg");
+    background-color: #4d3300;
+    font-family: 'Josefin Slab', serif;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Fredericka the Great', cursive;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+h2 {
+    font-size: 40px;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+a:hover {
+    color: #383838
+}
+
+label {
+    font-family: 'Fredericka the Great', cursive;
+    font-weight: bold;
+}
+
+li {
+    padding: 3px 3px 3px 3px;
+}
+
+.login span {
+    padding: 6px 8px 6px 16px;
+    color: #4d1a00;
+}
+
+.header {
+    width: 100%;
+    z-index: 1;
+    top: 0;
+    background-color: #664400;
+    border-style: solid;
+    border-color: #4d3300;
+}
+
+.login {
+    font-family: 'Fredericka the Great', cursive;
+}
+
+.flash {
+    font-family: 'Fredericka the Great', cursive;
+    color: #800000;
+}
+
+.banner {
+    width: 100%;
+    background-color: #805500;
+}
+
+.contents {
+    padding: 6px 6px 6px 6px;
+    background-color: #996600;
+    border-style: solid;
+    border-color: #4d3300;
+    font-size: 15px;
+}
+
+.title {
+    font-family: 'Fredericka the Great', cursive;
+}
+
+.genre {
+    font-weight: bold;
+}
+
+.ed-del a {
+    font-family: 'Fredericka the Great', cursive;
+}
+
+.sidebar {
+    height: 100%;
+    width: 20%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #996600;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    padding: 6px 8px 6px 16px;
+    font-size: 25px;
+    color: #000000;
+    display: block;
+}
+
+.main {
+    margin-left: 20%;
+    padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+}
