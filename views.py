@@ -170,7 +170,7 @@ def viewReadingList():
         return render_template('readinglist.html', books=books, name=user.name)
 
 
-@app.route('/readinglist/<string:genre>')
+@app.route('/readinglist/<string:genre>/')
 def viewGenre(genre):
     if 'username' not in login_session:
         sampleuser = session.query(User).filter_by(name="SampleUser").first()
@@ -186,7 +186,7 @@ def viewGenre(genre):
         return render_template('genrelist.html', books=books, name=user.name)
 
 
-@app.route('/readinglist/<int:id>')
+@app.route('/readinglist/<int:id>/')
 def viewBook(id):
     sampleuser = session.query(User).filter_by(name="SampleUser").first()
     book = session.query(Book).filter_by(id=id).first()
@@ -211,7 +211,7 @@ def viewBook(id):
             return redirect(url_for('viewReadingList'))
 
 
-@app.route('/readinglist/add', methods=['GET', 'POST'])
+@app.route('/readinglist/add/', methods=['GET', 'POST'])
 def addBook():
     if 'username' not in login_session:
         return redirect(url_for('showLogin'))
@@ -232,7 +232,7 @@ def addBook():
         return render_template('addbook.html', name=user.name)
 
 
-@app.route('/readinglist/<int:id>/edit', methods=['GET', 'POST'])
+@app.route('/readinglist/<int:id>/edit/', methods=['GET', 'POST'])
 def editBook(id):
     if 'username' not in login_session:
         return redirect(url_for('showLogin'))
@@ -265,7 +265,7 @@ def editBook(id):
         return render_template('editbook.html', book=book, name=user.name)
 
 
-@app.route('/readinglist/<int:id>/delete', methods=['GET', 'POST'])
+@app.route('/readinglist/<int:id>/delete/', methods=['GET', 'POST'])
 def deleteBook(id):
     if 'username' not in login_session:
         return redirect(url_for('showLogin'))
