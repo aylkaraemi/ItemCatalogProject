@@ -96,5 +96,5 @@ Clicking the login button at the top will allow you to login using your Google a
 
 There are also 3 JSON API endpoints that provide serialized information on:
 1. all books in the database: `http://localhost:8000/readinglist/JSON`
-2. all books of a specific genre: `http://localhost:8000/readinglist/<string:genre\>/JSON`
-3. a single book's detail: `http://localhost:8000/readinglist/<int:id\>/JSON`
+2. all books of a specific genre: `http://localhost:8000/readinglist/<string:genre>/JSON`
+3. a single book's detail: `http://localhost:8000/readinglist/<int:id>/JSON`
