@@ -9,10 +9,10 @@
 <div class="contents">
     <form action="{{url_for('addBook')}}" method="POST">
         <label for="title">Title:</label>
-        <input type="text" name="title"><br><br>
+        <input type="text" name="title" required><br><br>
 
         <label for="author">Author:</label>
-        <input type="text" name="author"><br><br>
+        <input type="text" name="author" required><br><br>
 
         <label for="description">Description:</label><br>
         <textarea maxlength="350" rows="5" cols="50" name="description" placeholder="Optional - enter a brief description of plot">
@@ -20,63 +20,63 @@
 
         <label for="genre">Genre:</label>
         <div class="radio">
-            <input type="radio" name="genre" value="Children-Young Adult">
+            <input type="radio" name="genre" value="Children-Young Adult" required>
             Children/Young Adult
             </input><br>
 
-            <input type="radio" name="genre" value="Graphic Novel">
+            <input type="radio" name="genre" value="Graphic Novel" required>
             Graphic Novel
             </input><br>
 
-            <input type="radio" name="genre" value="Classic">
+            <input type="radio" name="genre" value="Classic" required>
             Classic
             </input><br>
 
-            <input type="radio" name="genre" value="Fantasy">
+            <input type="radio" name="genre" value="Fantasy" required>
             Fantasy
             </input><br>
 
-            <input type="radio" name="genre" value="Horror">
+            <input type="radio" name="genre" value="Horror" required>
             Horror
             </input><br>
 
-            <input type="radio" name="genre" value="SciFi">
+            <input type="radio" name="genre" value="SciFi" required>
             SciFi
             </input><br>
 
-            <input type="radio" name="genre" value="Suspense-Thriller">
+            <input type="radio" name="genre" value="Suspense-Thriller" required>
             Suspense/Thriller
             </input><br>
 
-            <input type="radio" name="genre" value="Western">
+            <input type="radio" name="genre" value="Western" required>
             Western
             </input><br>
 
-            <input type="radio" name="genre" value="Romance">
+            <input type="radio" name="genre" value="Romance" required>
             Romance
             </input><br>
 
-            <input type="radio" name="genre" value="Mystery-Crime">
+            <input type="radio" name="genre" value="Mystery-Crime" required>
             Mystery/Crime
             </input><br>
 
-            <input type="radio" name="genre" value="Poetry">
+            <input type="radio" name="genre" value="Poetry" required>
             Poetry
             </input><br>
 
-            <input type="radio" name="genre" value="Anthology">
+            <input type="radio" name="genre" value="Anthology" required>
             Anthology
             </input><br>
 
-            <input type="radio" name="genre" value="General Fiction">
+            <input type="radio" name="genre" value="General Fiction" required>
             General Fiction
             </input><br>
 
-            <input type="radio" name="genre" value="Non-Fiction">
+            <input type="radio" name="genre" value="Non-Fiction" required>
             Non-Fiction
             </input><br>
 
-            <input type="radio" name="genre" value="Other">
+            <input type="radio" name="genre" value="Other" required>
             Other
             </input><br>
         </div>
