@@ -28,6 +28,7 @@ session = DBSession()
 
 @app.route('/login')
 def showLogin():
+    """Creates a state variable to use in validation and renders login page"""
     state = ''.join(random.choice(
         string.ascii_uppercase + string.digits) for x in range(32))
     login_session['state'] = state
@@ -36,6 +37,7 @@ def showLogin():
 
 @app.route('/gconnect', methods=['POST'])
 def googleConnect():
+    """Implements Google OAuth to login users"""
     # match state tokens to confirm request is valid
     if request.args.get('state') != login_session['state']:
         response = make_response(
@@ -112,6 +114,7 @@ def googleConnect():
 
 @app.route('/disconnect')
 def disconnect():
+    """Disconnects user from app via Google OAuth"""
     accessToken = login_session.get('accessToken')
     if accessToken is None:
         response = make_response(json.dumps('User is not connected.'), 401)
@@ -136,12 +139,15 @@ def disconnect():
 
 @app.route('/readinglist/JSON')
 def readingListJSON():
+    """API endpoint that returns list of books in database in JSON format"""
     books = session.query(Book).all()
     return jsonify(books=[book.serialize for book in books])
 
 
 @app.route('/readinglist/<string:genre>/JSON')
 def genreListJSON(genre):
+    """API endpoint that returns list of books of a particular genre in
+     database in JSON format"""
     books = session.query(Book).filter_by(genre=genre).all()
     if books:
         return jsonify(books=[book.serialize for book in books])
@@ -151,6 +157,7 @@ def genreListJSON(genre):
 
 @app.route('/readinglist/<int:id>/JSON')
 def bookJSON(id):
+    """API endpoint that returns detail of single book in JSON format"""
     book = session.query(Book).first()
     if book:
         return jsonify(book=book.serialize)
@@ -159,6 +166,7 @@ def bookJSON(id):
 @app.route('/')
 @app.route('/readinglist/')
 def viewReadingList():
+    """Renders main page based on whether a user is logged in or not."""
     if 'username' not in login_session:
         sampleuser = session.query(User).filter_by(name="SampleUser").first()
         books = session.query(Book).filter_by(user_id=sampleuser.id).all()
@@ -172,6 +180,8 @@ def viewReadingList():
 
 @app.route('/readinglist/<string:genre>/')
 def viewGenre(genre):
+    """Renders genre list page based on genre parameter and whether a user is
+     logged in or not."""
     if 'username' not in login_session:
         sampleuser = session.query(User).filter_by(name="SampleUser").first()
         books = session.query(Book).filter_by(
@@ -188,6 +198,8 @@ def viewGenre(genre):
 
 @app.route('/readinglist/<int:id>/')
 def viewBook(id):
+    """Renders book detail page based on book id parameter, user login status
+     and user authorization."""
     sampleuser = session.query(User).filter_by(name="SampleUser").first()
     book = session.query(Book).filter_by(id=id).first()
     if not book:
@@ -213,6 +225,8 @@ def viewBook(id):
 
 @app.route('/readinglist/add/', methods=['GET', 'POST'])
 def addBook():
+    """If user is logged in either renders add book page or adds book to
+     database tied to user's id. If not logged in, redirects to login page."""
     if 'username' not in login_session:
         return redirect(url_for('showLogin'))
     user = session.query(User).filter_by(
@@ -234,6 +248,8 @@ def addBook():
 
 @app.route('/readinglist/<int:id>/edit/', methods=['GET', 'POST'])
 def editBook(id):
+    """Checks authorization and either renders edit page or updates book record
+     in database."""
     if 'username' not in login_session:
         return redirect(url_for('showLogin'))
     user = session.query(User).filter_by(
@@ -267,6 +283,8 @@ def editBook(id):
 
 @app.route('/readinglist/<int:id>/delete/', methods=['GET', 'POST'])
 def deleteBook(id):
+    """Checks authorization and either renders delete page or deletes book
+     record in database."""
     if 'username' not in login_session:
         return redirect(url_for('showLogin'))
     user = session.query(User).filter_by(
