@@ -65,7 +65,7 @@ If you wish to use this app but do not already have a Google account you can sig
 ### Downloading the files
 To download the files for this app simply click the green 'Clone or download' button above the list of files. If you have Git you can use this button to clone the repo to your computer, or you can simply choose to download the files as a ZIP file.
 
-The files and directories downloaded will need to be saved inside the vagrant directory located inside the directory you set your virtual machine up in. I recommend creating a new directory inside the vagrant directory to keep the files and directories together and organized.
+The files and directories downloaded will need to be saved inside the vagrant directory located inside the directory you set your virtual machine up in. I recommend creating a new directory inside the vagrant directory to keep the files and directories together and organized. Whether you download them directly into the vagrant directory or a sub-directory, keep the files organized as they are in the repo (all files in 'static' stay in 'static', etc.).
 
 ### Getting a Client ID and Secret from Google
 To generate a client Id and secret to use with the Google OAuth API you will need to go to [https://console.developers.google.com](https://console.developers.google.com).
@@ -74,12 +74,12 @@ Once there, log in and follow the instructions for [Step 1: Create a client ID a
 
 Once you have created the project and generated the credentials, download the ID and secret as a JSON file (use the download button on the far right of the client ID).
 
-Rename the file it to 'client_secrets.json' and save it to the same directory as the other Reading List app files.
-
-You will also need to copy the client ID from the dashboard and paste it in the login.html file (located in the 'templates' directory) within the code for the Google Sign-in button where it says `data-clientid=`.
+Rename the file it to 'client_secrets.json' and save it to the same directory as the other Reading List app files (the main directory, not 'static' or 'templates'). The app will automatically pull the client secret and id from this file.
 
 ### Setting up the Database
-Change to the directory you saved the files to (either /vagrant or the directory you created inside /vagrant) so you can access them.
+Log into the VM following the instructions above.
+
+Change to the directory you saved the files to (either /vagrant or the directory you created inside /vagrant).
 
 Enter the command `python models.py` to initialize the database.
 
@@ -93,3 +93,8 @@ In your browser visit `http://localhost:8000` to view the Reading List app.
 You will see the full sample reading list on visiting the main page. Clicking on one of the genre categories will allow you to view all sample books of that genre. Clicking on an individual book will allow you to view the detail page about that book. You will not be able to add, edit or delete any of the sample data.
 
 Clicking the login button at the top will allow you to login using your Google account. Once successful you will be brought to your personal reading list. You will be able to access the same views for your personal list (full list, genre list and specific book) as well as being able to add, edit or delete books.
+
+There are also 3 JSON API endpoints that provide serialized information on:
+1. all books in the database: `http://localhost:8000/readinglist/JSON`
+2. all books of a specific genre: `http://localhost:8000/readinglist/<string:genre\>/JSON`
+3. a single book's detail: `http://localhost:8000/readinglist/<int:id\>/JSON`
