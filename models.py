@@ -35,6 +35,6 @@ class Book(Base):
         }
 
 
-engine = create_engine('sqlite:///readinglist.db')
+engine = create_engine('postgresql://vagrant:p3nguin@localhost/readinglist')
 
 Base.metadata.create_all(engine)

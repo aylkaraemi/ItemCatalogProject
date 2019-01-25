@@ -19,7 +19,7 @@ baseURL = 'https://www.googleapis.com/oauth2/v1/'
 
 app = Flask(__name__)
 
-engine = create_engine('sqlite:///readinglist.db')
+engine = create_engine('postgresql://vagrant:p3nguin@localhost/readinglist')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)

@@ -3,7 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from models import Base, User, Book
 
-engine = create_engine('sqlite:///readinglist.db')
+engine = create_engine('postgresql://vagrant:p3nguin@localhost/readinglist')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
